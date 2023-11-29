@@ -1,0 +1,56 @@
+{% extends 'layout/base.html' %}
+
+{% block css %}
+<style>
+    body{
+        background-color: white;
+    }
+</style>
+    
+{% endblock css %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <form  method="post">
+              {% csrf_token %}
+                <h2>Register</h2>
+                <div class="mb-3">
+                    <div class="mb-3">
+                      <label for="" class="form-label">username</label>
+                      <input type="text"
+                        class="form-control" name="username" id="username" aria-describedby="helpId" placeholder="abc@gmail.com">
+                      
+                    </div>
+                    <div class="mb-3">
+                      <label for="" class="form-label">Email</label>
+                      <input type="text"
+                        class="form-control" name="Email" id="Email" aria-describedby="helpId" placeholder="Email">
+                      
+                    </div>
+                    <div class="mb-3">
+                      <label for="Password" class="form-label">Password</label>
+                      <input type="text"
+                        class="form-control" name="Password" id="Password" aria-describedby="helpId" placeholder="Password">
+                      <small id="helpId" class="form-text text-muted">Help text</small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="cpass" class="form-label">confirmpassword</label>
+                      <input type="text"
+                        class="form-control" name="cpass" id="cpass" aria-describedby="helpId" placeholder="confirmpassword">
+                      <small id="helpId" class="form-text text-muted">Help text</small>
+                    </div>
+                    <button class="btn btn-success">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    
+{% endblock content %}
+    
+    

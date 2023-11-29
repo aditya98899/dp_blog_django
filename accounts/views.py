@@ -19,7 +19,7 @@ def register_view(request):
         messages.success (request, "Account created succesfully")
         return redirect('login')
     else:
-        return render(request, 'account/register.html')
+        return render(request, 'accounts/register.html')
     
 def login_view(request):
     if request.method == "POST":
@@ -29,8 +29,8 @@ def login_view(request):
             messages.error(request, "Invalid credentials")
             return redirect ('login')
         # user authenticate karo
-        User = authenticate (request, email=email, password=password)
-        if User is not None:
+        user = authenticate (request, email=email, password=password)
+        if user is not None:
             messages.success(request, "Loggout in successfully")
             login(request, user)
             return redirect('home')
@@ -38,7 +38,7 @@ def login_view(request):
             messages.error(request, "Invalid credentials")
             return redirect('login')
     else:
-        return render(request, 'account/login.html')
+        return render(request, 'accounts/login.html')
     
 def logout_view(request):
     logout(request)
@@ -46,7 +46,7 @@ def logout_view(request):
     return redirect( 'login')
 
 def profile_view(request):
-    return render(request, ' account/profile.html')
+    return render(request, ' accounts/profile.html')
 
 
 
