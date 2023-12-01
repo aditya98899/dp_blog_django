@@ -1,26 +1,45 @@
 {% extends 'layout/base.html' %}
+
+{% block css %}
+<style>
+  body{
+       background-image: radial-gradient(#db79f,#a8dba8,#);
+  }
+  #login-box{
+    min-height: 80vh;
+    padding-top: 5rem;
+  }
+  
+</style>
+  
+{% endblock css %}
+#login-box{
+
+}
+  
 {% block content %}
-<div class="container">
-    <div class="row">
-         <div class="col-lg-4 mx-auto">
-            <form  method="post"></form>
-            {% csrf_token %}
-   <div class="mb-3">
-     <label for="email" class="form-label">Email</label>
-     <input type="text"
-       class="form-control" name="email" id="email" aria-describedby="helpId" placeholder="your email">
-     <small id="helpId" class="form-text text-muted">enter your register email</small>
-   </div>
-   <div class="mb-3">
-     <label for="password" class="form-label">Password</label>
-     <input type="text"
-       class="form-control" name="password" id="password" aria-describedby="helpId" placeholder="your password">
-     <small id="helpId" class="form-text text-muted">Help text</small>
-   </div>
-   <button type="submit" class="btn btn-primary">Loging</button>
-</form>
-</div>
+<div class="container" id="login-box">
+  <div class="row">
+    <div class="col-lg-4 mx-auto">
+      <form method="post">
+        {% csrf_token %}
+        <h1>Login</h1>
+        {% include 'components/message.html' %}
+        <div class="mb-3">
+          <label for="username" class="form-label">username</label>
+          <input type="text" class="form-control" name="username" id="username" aria-describedby="helpId"
+            placeholder="your username">
+          <small id="helpId" class="form-text text-muted">enter your register username</small>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="text" class="form-control" name="password" id="password" aria-describedby="helpId"
+            placeholder="your password">
+          <small id="helpId" class="form-text text-muted">Help text</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock content %}
-    
-    

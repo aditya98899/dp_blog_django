@@ -8,14 +8,23 @@ def register_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
-        password = request.POST.get(password)
-        cpassword = request.POST.get(cpass)
-        if password != cpassword or len(password) > 0 or len(cpassword) > 0:
+        password = request.POST.get('password')
+        cpassword = request.POST.get('cpassword')
+        print(password,cpassword)
+        if password != cpassword or len(password) == 0 or len(cpassword) == 0:
             messages.error( request,"passwords do not match")
             return redirect('register')
+        #move validation can be added here
+        #check if user already exists
+        if User.object.filter(username=username).exists():
+            messages.error(request,"username already axists")
+            return redirect ('redirect')
+        if User.obejct.filter(email=email).exists():
+            messages.error(request, 'email already exists')
+            return redirect( 'register')
         #user create
         #user create karo
-        user = user.objects.create_user (username, email, password)
+        user = User.objects.create_user (username, email, password)
         messages.success (request, "Account created succesfully")
         return redirect('login')
     else:
@@ -23,13 +32,13 @@ def register_view(request):
     
 def login_view(request):
     if request.method == "POST":
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        if len(email) == 0 or len (password) == 0:
+        if len(username) == 0 or len (password) == 0:
             messages.error(request, "Invalid credentials")
             return redirect ('login')
         # user authenticate karo
-        user = authenticate (request, email=email, password=password)
+        user = authenticate (request, username=username, password=password)
         if user is not None:
             messages.success(request, "Loggout in successfully")
             login(request, user)

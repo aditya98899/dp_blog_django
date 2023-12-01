@@ -18,6 +18,8 @@
             <form  method="post">
               {% csrf_token %}
                 <h2>Register</h2>
+                {% include 'components/message.html'%}
+
                 <div class="mb-3">
                     <div class="mb-3">
                       <label for="" class="form-label">username</label>
@@ -34,13 +36,13 @@
                     <div class="mb-3">
                       <label for="Password" class="form-label">Password</label>
                       <input type="text"
-                        class="form-control" name="Password" id="Password" aria-describedby="helpId" placeholder="Password">
+                        class="form-control" name="password" id="Password" aria-describedby="helpId" placeholder="Password">
                       <small id="helpId" class="form-text text-muted">Help text</small>
                     </div>
                     <div class="mb-3">
-                      <label for="cpass" class="form-label">confirmpassword</label>
+                      <label for="cpassword" class="form-label">confirmpassword</label>
                       <input type="text"
-                        class="form-control" name="cpass" id="cpass" aria-describedby="helpId" placeholder="confirmpassword">
+                        class="form-control" name="cpassword" id="cpassword" aria-describedby="helpId" placeholder="cmpassword">
                       <small id="helpId" class="form-text text-muted">Help text</small>
                     </div>
                     <button class="btn btn-success">Register</button>
