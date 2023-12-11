@@ -1,6 +1,14 @@
-{% extends 'layout/base.html' %}   
+{% extends 'layout/base.html' %}
 {% load static %}
 
+{% block css %}
+  <style>
+    body{
+      background-image: radial-gradient(rgb(209, 165, 78),#fdfa4d,#eed3d3);
+    }
+  </style>
+{% endblock css %}
+  
 {% block content %}
       {% include 'components/message.html' %}   
       "<section class="py-5 text-center container">

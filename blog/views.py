@@ -53,7 +53,7 @@ def my_article(request):
 @login_required
 def inc_like(request, id):
     article = Article.objects.get(id=id)
-    article.likes += 1
+    article.like  += 1
     article.save()
     return redirect('detail', id=id)
 
