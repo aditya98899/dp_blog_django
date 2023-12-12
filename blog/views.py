@@ -22,7 +22,8 @@ def add_view(request):
     if request.method == "POST":
         title = request.POST.get('title')
         content = request.POST.get('content')
-        topic = request.POST.get('topic')
+        topic_id = request.POST.get('topic')
+        topic = Topic.objects.get(id=topic_id)
         image = request.FILES.get('image')
         author = request.user
         if len(title) < 3:
@@ -38,7 +39,9 @@ def add_view(request):
         article.save()
         messages.success(request, 'Article created successfully')
         return redirect('my_articles')
-    return render(request, 'blog/add.html')
+    return render(request, 'blog/add.html', {
+        'topics' : Topic.objects.all()
+    })
 
 @login_required
 def my_article(request):
