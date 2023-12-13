@@ -14,29 +14,42 @@
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
                             <input type="text" class="form-control form-control-lg" name="title" id="title"
-                                aria-describedby="helpId" placeholder="your article's title" />
+                                aria-describedby="helpId" placeholder="your article's title"
+                                {% if article %}
+                                value="{{article.title}}"
+                                {% endif %} 
+                                />
                             <small id="helpId" class="form-text text-muted"></small>
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             <textarea class="form-control form-control-lg" name="content" id="content" rows="10"
-                                aria-describedby="contenthelp"></textarea>
+                                aria-describedby="contenthelp">{% if article %} {{article.content}} {% endif %} </textarea>
                             <small id="contenthelp" class="form-text text-muted"></small>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Choose Article Image</label>
                             <input type="file" class="form-control  form-control-lg" name="image" id="image"
-                                placeholder="select image" aria-describedby="fileHelpId" />
-                            <div id="fileHelpId" class="form-text"></div>
+                                placeholder="select image" aria-describedby="fileHelpId"
+                                />
+                            <div id="fileHelpId" class="form-text">
+                                {% if article %}
+                                current image : <a href="{{article.image.url}}">{{article.title}}</a>
+                                {% endif %} 
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="topic" class="form-label">Topic</label>
                             <select class="form-select form-select-lg" name="topic" id="topic">
                                 
                                 {% for topic in topics %}
-                                <option value="{{ topic.id}}">{{topic.name}}</option>
-
-                                {% endfor %}
+                                <option value="{{ topic.id}}"
+                                    {% if article.topic.name == topic.name %}
+                                    selected
+                                    {% endif %}>
+                               {{topic.name}}
+                            </option>
+                            {% endfor %}
 
                             </select>
                         </div>

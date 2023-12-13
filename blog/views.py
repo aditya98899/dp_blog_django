@@ -8,7 +8,7 @@ def home_view(request):
     #get all articles
     article_list = Article.objects.all()
     topic_list = Topic.objects.all()
-    paginator = Paginator(article_list, 12)
+    paginator = Paginator(article_list, 8)
     page = request.GET.get('p', 1)
     #get article for this page
     articles = paginator.get_page(page)
@@ -46,10 +46,10 @@ def add_view(request):
 @login_required
 def my_article(request):
     article_list = Article.objects.filter(author = request.user)
-    paginator = Paginator(article_list, 12)
+    paginator = Paginator(article_list, 8)
     page = request.GET.get('p', 1)
     ctx = {
-        'article' : paginator.get_page(page)
+        'articles' : paginator.get_page(page)
     }
     return render(request, 'blog/my_articles.html', ctx)
 
@@ -66,12 +66,41 @@ def detail_view(request, id):
 
 @login_required
 def edit_view(request, id):
-    #todo
-    return render(request, 'blog/add.html')
+    
+    if request.method == "POST":
+        article = Article.objects.get(id=id)
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        topic_id = request.POST.get('topic')
+        topic = Topic.objects.get(id=topic_id)
+        image = request.FILES.get('image')
+        author = request.user
+        if len(title) < 3:
+            messages.error(request, 'Tilte must be at least 3 charecters.')
+            return redirect('edit',id=id)
+        if len(content) < 50:
+            messages.error(request, 'Content must be at least 50 charecters.')
+            return redirect('edit',id=id)
+        if not image:
+            image=article.image
+        
+        article.title = title
+        article.content=content
+        article.topic=topic
+        article.image=image
+        article.save()
+        messages.success(request,'Article updated successfully')
+        return redirect('my_articles')
+    return render(request, 'blog/add.html',{
+
+        'article' : Article.objects.get(id=id),
+        'topics' : Topic.objects.all()
+    })
+    
 
 @login_required
 def delete_view(request, id):
     article = Article.objects.get(id=id)
     article.delete()
     messages.success(request, 'Article deleted successgully')
-    return redirect('my_article')
+    return redirect('my_articles')

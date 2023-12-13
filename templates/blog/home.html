@@ -2,55 +2,70 @@
 {% load static %}
 
 {% block css %}
-  <style>
-    body{
-      background-image: radial-gradient(rgb(209, 165, 78),#fdfa4d,#eed3d3);
-    }
-  </style>
+<style>
+  body {
+    background-image: radial-gradient(rgb(209, 165, 78), #fdfa4d, #eed3d3);
+  }
+</style>
 {% endblock css %}
-  
+
 {% block content %}
-      {% include 'components/message.html' %}   
-      "<section class="py-5 text-center container">
-        <div class="row py-lg-5">
-          <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Album example</h1>
-            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            <p>
-              <a href="#" class="btn btn-primary my-2">Main call to action</a>
-              <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-            </p>
-          </div>
-        </div>
-      </section>">
-      <div class="container">
-        <div class="row">
-            
-            
-            {% for  item in articles %}
-            {% include 'components/article_card.html' %}
-                
-            {% empty %}
-            <div class="alert alert-info" role="alert">
-              <h4 class="alert-heading">No articles available </h4>
-              <p> You can create an account and write new article for us </p>
-              <hr>
-              <p class="mb-0">
-                Are you are budding writer?
-                <a href="{% url 'register' %}">Register here</a>
-                to write article for us 
-              </p>
-            </div>
-                
-            {% endfor %}
-                
-                
+{% include 'components/message.html' %}
+"<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">Album example</h1>
+      <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc.
+        Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+      <p>
+        <a href="#" class="btn btn-primary my-2">Main call to action</a>
+        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+      </p>
+    </div>
+  </div>
+</section>">
+<div class="container">
+  <div class="row">
 
-        </div>
-      </div>
 
-{% endblock  %}
-    
+    {% for item in articles %}
+    {% include 'components/article_card.html' %}
 
-     
-    
+    {% empty %}
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No articles available </h4>
+      <p> You can create an account and write new article for us </p>
+      <hr>
+      <p class="mb-0">
+        Are you are budding writer?
+        <a href="{% url 'register' %}">Register here</a>
+        to write article for us
+      </p>
+    </div>
+
+    {% endfor %}
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+
+        {% if articles.has_previous %}
+        <li class="page-item"><a class="page-link" href="?p=1">&laquo; first</a></li>
+        <li class="page-item"><a class="page-link" href="?p={{ articles.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        <li class="page-item"><span class="page-link active">
+            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+          </span>
+        </li>
+
+        {% if articles.has_next %}
+        <li class="page-item"><a class="page-link" href="?p={{ articles.next_page_number }}">next</a></li>
+        <li class="page-item"><a class="page-link" href="?p={{ articles.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+
+      </ul>
+    </nav>
+  </div>
+</div>
+
+{% endblock %}
